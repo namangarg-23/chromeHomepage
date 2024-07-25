@@ -1,0 +1,452 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #121212; /* Dark background */
+  color: #e0e0e0; /* Light text color for contrast */
+  margin: 0;
+  padding: 0;
+}
+
+#dashboard {
+  position: relative; /* For absolute positioning of widgets */
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  overflow: hidden; /* Hide overflow to avoid scrollbars */
+}
+
+/* General Widget Styles */
+.widget {
+  background-color: #1f1f1f; /* Darker background for widgets */
+  border: 1px solid #333; /* Slightly lighter border */
+  border-radius: 50%; /* Circular shape by default */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  width: 60px; /* Default small size */
+  height: 60px; /* Default small size */
+  transition: all 0.3s ease;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute; /* Absolute positioning for layout control */
+}
+
+/* Hover Effect */
+.widget:hover {
+  width: 250px; /* Expanded width */
+  height: 250px; /* Expanded height */
+  border-radius: 8px; /* Square shape on hover */
+}
+
+/* Widget Icons */
+.widget-icon {
+  font-size: 24px;
+  color: #ff5722; /* Vibrant color for icons */
+  transition: color 0.3s ease;
+}
+
+.widget:hover .widget-icon {
+  color: #ffffff; /* Change color on hover */
+}
+
+/* Widget Content */
+.widget-content {
+  display: none;
+  padding: 20px;
+  background-color: #2c2c2c; /* Darker background for content area */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.widget:hover .widget-content {
+  display: block;
+}
+
+/* Vertical Layout */
+.left-widget-container {
+  position: fixed; /* Fix to the page */
+  top: 20px; /* Start from top */
+  left: 20px; /* Align to left side */
+  display: flex;
+  flex-direction: column; /* Stack vertically */
+  gap: 20px; /* Spacing between widgets */
+}
+
+.right-widget-container {
+  position: fixed; /* Fix to the page */
+  top: 20px; /* Start from top */
+  right: 20px; /* Align to right side */
+  display: flex;
+  flex-direction: column; /* Stack vertically */
+  gap: 20px; /* Spacing between widgets */
+}
+
+/* Specific Widget Styles */
+.widget.music {
+  background-color: #ffffff;
+  color: #333;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.widget.music .widget-icon {
+  color: #007bff;
+}
+
+.widget.music .widget-content a {
+  color: #007bff;
+}
+
+.widget.music .widget-content a:hover {
+  text-decoration: underline;
+}
+
+/* Poll Widget Styles */
+.poll {
+  margin-bottom: 20px;
+}
+
+.poll-option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.poll-option input {
+  margin-right: 10px;
+}
+
+.poll-option label {
+  cursor: pointer;
+}
+
+.poll button {
+  margin-top: 10px;
+  background-color: #ff5722; /* Vibrant color for poll buttons */
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.poll button:disabled {
+  background-color: #333;
+  cursor: not-allowed;
+}
+
+.poll button:hover:not(:disabled) {
+  background-color: #e64a19; /* Darker shade on hover */
+}
+
+/* Announcements Popup Styles */
+.announcement-popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 15px;
+  z-index: 1000; /* Ensure it appears above other content */
+}
+
+.announcement-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dismiss-button {
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #ff5722;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.dismiss-button:hover {
+  color: #ffffff; /* Change color on hover */
+}
+
+/* Meta Widget Styles */
+.meta-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #333;
+  color: #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  padding: 10px;
+  z-index: 1000; /* Ensure it appears above other content */
+  transition: all 0.3s ease;
+}
+
+.meta-widget .meta-icon {
+  background: #ff5722;
+  border: none;
+  color: #ffffff;
+  font-size: 24px;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+  transition: background 0.3s ease;
+}
+
+.meta-widget .meta-icon:hover {
+  background: #e64a19; /* Darker shade on hover */
+}
+
+.meta-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.meta-content h2 {
+  margin: 0;
+  color: #ff5722; /* Vibrant header color */
+}
+
+.meta-option {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.meta-option input {
+  margin-right: 10px;
+}
+
+.meta-option label {
+  cursor: pointer;
+}
+
+.meta-widget.hide {
+  display: none;
+}
+
+/* Hidden Widget Style */
+.hidden-widget {
+  display: none;
+}
+
+/* Issue Tracker Styles */
+.widget.issue-tracker {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+.widget.issue-tracker table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.widget.issue-tracker th, .widget.issue-tracker td {
+  border: 1px solid #444;
+  padding: 8px;
+  text-align: left;
+}
+
+.widget.issue-tracker th {
+  background-color: #333;
+  color: #ff5722;
+}
+
+.widget.issue-tracker tbody tr:nth-child(even) {
+  background-color: #1f1f1f;
+}
+
+.widget.issue-tracker tbody tr:hover {
+  background-color: #333;
+}
+
+/* Daily Growth Checklist Styles */
+.widget.daily-growth-checklist {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+.widget.daily-growth-checklist ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.widget.daily-growth-checklist li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #444;
+}
+
+.widget.daily-growth-checklist li.completed {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.widget.daily-growth-checklist input[type="checkbox"] {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.widget.daily-growth-checklist .widget-icon {
+  font-size: 24px;
+  color: #ff5722;
+}
+
+.widget.daily-growth-checklist .widget-content {
+  padding: 10px;
+}
+
+/* Health Tracker Styles */
+.widget.health-tracker {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+.widget.health-tracker .widget-icon {
+  font-size: 24px;
+  color: #ff5722;
+}
+
+.widget.health-tracker .widget-content {
+  padding: 10px;
+}
+
+.widget.health-tracker p {
+  font-size: 18px;
+}
+
+/* Generic Leaderboard Styles */
+.widget.generic-leaderboard {
+  background-color: #2c2c2c;
+  color: #e0e0e0;
+}
+
+.widget.generic-leaderboard .widget-icon {
+  font-size: 24px;
+  color: #ff5722;
+}
+
+.widget.generic-leaderboard .widget-content {
+  padding: 10px;
+  max-height: 400px; /* Adjust as needed */
+  overflow-y: auto;
+}
+
+.widget.generic-leaderboard table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.widget.generic-leaderboard th, 
+.widget.generic-leaderboard td {
+  padding: 8px;
+  border: 1px solid #444;
+}
+
+.widget.generic-leaderboard th {
+  background-color: #333;
+  color: #ff5722;
+}
+
+.widget.generic-leaderboard tr:nth-child(even) {
+  background-color: #333;
+}
+
+.widget.generic-leaderboard tr:nth-child(odd) {
+  background-color: #1f1f1f;
+}
+
+/* Signature Style */
+.signature {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  color: #e0e0e0;
+  font-size: 14px;
+}
+
+/* Date and Time Display Styles */
+.datetime-display {
+  background-color: #282c34;
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000; /* Ensure it appears above other content */
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+}
+
+.datetime-display p {
+  margin: 0;
+}
+
+
+.search-bar {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  background-color: #333; /* Dark background */
+  border-radius: 24px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding: 10px; /* Padding around the search input */
+  width: 650px; /* Adjust width for longer search bar */
+  max-width: 100%;
+  z-index: 10; /* Ensure it is above other elements */
+}
+
+.search-bar-icon {
+  font-size: 20px;
+  color: #fff; /* Light color for dark theme */
+  margin-right: 12px; /* Space between icon and input */
+}
+
+.search-form {
+  width: 100%;
+}
+
+.search-bar input {
+  width: 95%;
+  padding: 10px; /* Larger padding for a more spacious input */
+  border: none;
+  border-radius: 24px; /* Match rounded corners */
+  font-size: 16px;
+  outline: none;
+  color: #fff; /* Light text color for dark theme */
+  background-color: #555; /* Dark background for input */
+  box-shadow: inset 0 0 0 1px #444; /* Dark border for input */
+}
+
+.search-bar input::placeholder {
+  color: #bbb; /* Light gray placeholder text */
+}
+
+
+.greeting {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 10; /* Ensure it is above other elements */
+}
+
